@@ -1,0 +1,266 @@
+\section{Vetores}
+
+\subsection{Inicializacao}
+\subsubsection{1D}
+\begin{itemize}
+    \item \lstinline{memset(vetor, valor, n)}
+        \par Coloca \lstinline{valor} nas primeiras \lstinline{n} posições de \lstinline{v}.
+\end{itemize}
+
+\subsubsection{2D}
+\begin{itemize}
+    \item Tamanhos dados por input:
+    \begin{verbatim}
+        int rows, columns
+        cin >> rows >> columns;
+        vector<vector<int> > a(rows, vector<int>(columns, 0));
+
+    \end{verbatim}
+\end{itemize}
+
+\subsection{Difference Array}
+\par Utilizado para somar ou subtrair valores de um vetor dado um range e um comportamento específico.
+\begin{itemize}
+    \item Estrutura inicial: array a[]
+    \item Operações de range O(1) ($\pm d$)
+    \item Restaurar os valores do array: O(n)
+\end{itemize}
+
+\begin{verbatim}
+    delta = 0;
+    for (int i = 0; i < MAX; i++){
+        delta += diff[i]; // array de diferenças
+        a[i] += delta;
+    }
+\end{verbatim}
+
+\subsubsection{Difference Array 2D}
+\begin{itemize}
+    \item $\lstinline{dcol}$ é um vetor de acumulado para as colunas, responsável por garantir o comportamento do range de somas.
+\end{itemize}
+
+\begin{verbatim}
+    for (int i = 0; i < MAX; i++){
+        int delta = 0;
+        for (int j = 0; j < MAX; j++){
+            dcol[j] += diff[i][j];
+            delta += dcol[j];
+            a[i][j] += delta;
+        }
+    }
+\end{verbatim}
+
+\subsection{Segment tree}
+\par Extensivamente utilizada para fazer operações em intervalos de vetores, tanto atualização como consultas sao feitas em $O(\log n)$. \\
+Um teste com $n$ operações de consulta implementadas linearmente criariam um algoritmo $O(n^2)$, enquanto aplicando SegTree, $n$ operações geram um algoritmo $O(n\log n)$.
+\par OBS: a árvore é indexada com o pai em 1, ou seja, chamar \lstinline{_build(1, 0, n-1)}, \lstinline{_query(1, 0, n-1, i, j)}, \lstinline{_update(1, 0, n-1, i, val)}
+
+\subsubsection{SegTree Aditiva}
+\begin{verbatim}
+
+    int a[MAX], tree[4*MAX];
+
+    void build(int node, int start, int end){
+        // Leaf node
+        if(start == end) tree[node] = a[start];        
+        else{
+            int mid = (start + end) >> 1;
+            
+            build(2*node, start, mid);
+            build(2*node+1, mid+1, end);
+            
+            tree[node] = tree[2*node] + tree[2*node+1];
+        }
+    }
+    
+    void update(int node, int start, int end, int idx, int val){
+        // Leaf node
+        if(start == end){
+            A[idx] += val;
+            tree[node] += val;
+            return;
+        }
+    
+        int mid = (start + end) >> 1;
+        
+        if(start <= idx and idx <= mid) 
+            update(2*node, start, mid, idx, val); // left child
+        else 
+            update(2*node+1, mid+1, end, idx, val); // right child
+        
+        tree[node] = tree[2*node] + tree[2*node+1];
+        
+    }
+
+    int query(int node, int start, int end, int l, int r){
+        // range completely outside
+        if(r < start or end < l) return 0; // sum neutral
+
+        // range completely inside
+        if(l <= start and end <= r) return tree[node];
+        
+        // range partially inside and partially outside
+        int mid = (start + end) >> 1;
+        int p1 = query(2*node, start, mid, l, r);
+        int p2 = query(2*node+1, mid+1, end, l, r);
+        return (p1 + p2);
+    }
+\end{verbatim}
+
+\subsubsection{SegTree Multiplicativa}
+\begin{verbatim}
+
+    int a[MAX], tree[4*MAX];
+
+    void build(int node, int start, int end){
+        // Leaf node
+        if(start == end) tree[node] = a[start];        
+        else{
+            int mid = (start + end) >> 1;
+            
+            build(2*node, start, mid);
+            build(2*node+1, mid+1, end);
+            
+            tree[node] = tree[2*node] * tree[2*node+1];
+        }
+    }
+    
+    void update(int node, int start, int end, int idx, int val){
+        // Leaf node
+        if(start == end){
+            A[idx] += val;
+            tree[node] += val;
+            return;
+        }
+    
+        int mid = (start + end) >> 1;
+        
+        if(start <= idx and idx <= mid) 
+            update(2*node, start, mid, idx, val); // left child
+        else 
+            update(2*node+1, mid+1, end, idx, val); // right child
+        
+        tree[node] = tree[2*node] * tree[2*node+1];
+        
+    }
+
+    int query(int node, int start, int end, int l, int r){
+        // range completely outside
+        if(r < start or end < l) return 1; // multiplication neutral
+
+        // range completely inside
+        if(l <= start and end <= r) return tree[node];
+        
+        // range partially inside and partially outside
+        int mid = (start + end) >> 1;
+        int p1 = query(2*node, start, mid, l, r);
+        int p2 = query(2*node+1, mid+1, end, l, r);
+        return (p1 * p2);
+    }
+\end{verbatim}
+
+
+\subsubsection{SegTree Aditiva com Lazy Propagation}
+\par Lazy propagation serve para atualizações em intervalos.
+\par Código adaptado para range queries e range updates (lazy propagation)
+\begin{verbatim}
+
+    vector<ll> a(MAX), tree(4*MAX), lazy(4*MAX);
+
+    // call build(1, 0, n-1);
+    void build(int node, int start, int end){
+        if (start == end) tree[node] = a[start];
+        else{
+            int mid = (start+end)>>1;
+    
+            build(2*node,start,mid);
+            build(2*node+1,mid+1,end);
+    
+            tree[node] = tree[2*node] + tree[2*node+1];
+        }
+    }
+
+    // call updateRange(1, 0, n-1, l, r, val);
+    void updateRange(int node, int start, int end, int l, int r, int val){
+        if (lazy[node]){
+            tree[node] += (end-start+1) * lazy[node];
+            if (start != end){
+                lazy[2*node] += lazy[node];
+                lazy[2*node+1] += lazy[node];
+            }
+            lazy[node] = 0;
+        }
+    
+        if (start>end || start>r || end<l) return;
+    
+        if (start>=l && end<=r){
+            tree[node] += (end-start+1) * val;
+            if (start != end){
+                lazy[2*node] += val;
+                lazy[2*node+1] += val;
+            }
+            return;
+        }
+    
+        int mid = (start+end) >> 1;
+        updateRange(2*node, start, mid, l, r, val);
+        updateRange(2*node+1, mid+1, end, l, r, val);
+        tree[node] = tree[2*node] + tree[2*node+1];
+    }
+
+    // call queryRange(1, 0, n-1, l, r);
+    ll queryRange(int node, int start, int end, int l, int r){
+        if (start>end || start>r || end<l) return 0;
+    
+        if (lazy[node]){
+            tree[node] += (end-start+1) * lazy[node];
+            if (start != end){
+                lazy[2*node] += lazy[node];
+                lazy[2*node+1] += lazy[node];
+            }
+            lazy[node] = 0;
+        }
+    
+        if (start>=l && end<=r) return tree[node];
+    
+        int mid = (start+end)>>1;
+        ll p1 = queryRange(2*node, start, mid, l, r);
+        ll p2 = queryRange(2*node+1, mid+1, end, l, r);
+        return (p1+p2);
+    }
+\end{verbatim}
+\subsection{Fenwick Tree (BIT)}
+
+\par Uma estrutura que, de modo semelhante à SegTree, realiza operações de consulta e de atualização ambas em $O(\log n)$. OBS: a árvore bit é indexada a partir de 1.
+
+\subsubsection{BIT aditiva}
+
+\begin{verbatim}
+    int n, bit[MAX];
+
+    void setbit(int i, int delta){
+        while (i <= n){
+            bit[i] += delta;
+            i += i&-i; // i&-i retorna a maior potencia de 2 que divide i
+        }
+    }
+
+    int getbit(int i){
+        int ans = 0;
+        while(i){
+            ans += bit[i];
+            i -= i&-i; // subtrai maior potencia de 2 que divide i
+        }
+        return ans;
+    }
+\end{verbatim}
+
+\subsection{Bitset}
+    Maneira de armazenar uma string binária de forma eficiente, com complexidade O(n/32) e O(n/64). A utilização pode ser feita da mesma forma que vetores, com a condição da estrutura favorecer operações bit a bit.
+\begin{verbatim}
+bitset<n> nome(k); /*criar bitset de tamanho n (deve ser 
+conhecido em tempo de compilação) que armazena o número k.*/
+\end{verbatim}
+    
+\pagebreak
+

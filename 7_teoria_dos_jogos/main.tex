@@ -1,0 +1,18 @@
+\section{Teoria dos Jogos}
+
+\subsection{Jogo do Nim}
+    \textbf{1- Jogo do Nim:} Dadas k pilhas (g1, g2, ..., gk), deve-se retirar uma quantidade de pedras de alguma pilha. O vencedor será sempre o jogador que possui a soma de Nim não nula em sua jogada, isto é, $g1 \oplus g2 \oplus ... gk != 0$
+    \\
+    
+    \textbf{2- Grundy Numbers \& mex (mínimo excluído):} o número de Grundy é utilizado para analisar o estado do jogo. Todo jogo imparcial possui um numero de Grundy. O número de Grundy é o MEX de todos os estados possíveis que podemos atingir a partir do estado atual, considerando as jogadas válidas.
+    \\
+    
+    \textbf{3- Grundy numbers em jogos de Nim compostos (mais de uma pilha):} o número de Grundy do jogo completo é dado pelo XOR bit a bit de todas as $n$ pilhas.
+    \begin{center}
+        $S = g_1 \bigoplus g_2 \bigoplus \cdots \bigoplus g_n$
+    \end{center}
+    
+    \textbf{4- Teorema de Sprague Grundy:} se o Grundy number resultante for diferente de 0, o jogador da vez ganha; do contrário, o adversário ganha.
+\pagebreak
+
+s

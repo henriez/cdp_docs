@@ -1,0 +1,79 @@
+\section{Grafos}
+
+\subsection{\textbf{Map adjacência}} Implementação de uma lista de adjacência (sem classe/struct)
+    \begin{verbatim}
+        map<int, vector<int>> adj_map;
+
+        void addEdge (map<int, vector<int>> adj_map, int u, int v){
+            adj_map[u].push_back(v);
+        }
+    \end{verbatim}
+
+\textbf{2- DFS:} busca em profundidade de grafos (depth-first search)
+    \begin{verbatim}
+void visit (int u, map<int, vector<int>> &adj_map, vector<bool> &visited){
+    visited[u] = true;
+        
+    vector<int>::iterator i;
+    for (i = adj_map[u].begin(); i != adj_map[u].end(); ++i)
+        if (!visited[*i])
+            visit(*i, adj_map, visited);
+}
+    
+void DFS(map<int, vector<int>> &adj_map, int V){
+    vector<bool> visited(V, false);
+    for (int u=0; i<V; u++)
+        if (visited[u]==false)
+            visit(u, adj_map, visited);
+}
+    \end{verbatim}
+
+\textbf{3- BFS:} busca em largura de grafos (breadth-first search)
+    \begin{verbatim}
+    
+    \end{verbatim}
+
+\textbf{4- Ordenação Topológica:} atribui rótulos aos vértices de um grafo DAG de modo que para toda aresta (u, v), u.rótulo $<$ v.rótulo.
+    \begin{verbatim}
+void BFS (int u, map<int, vector<int>> &adj_map, vector<bool> &visited, vector<int> &rot_default){
+    visited[u] = true;
+    vector<int>::iterator i;
+    for (i=adj_map[u].begin(); i!=adj_map[u].end(); ++i)
+        if (!visited[*i])
+            BFS(*i, adj_map, visited, rot_default);
+    rot_default[u] = rotulo++;
+}
+
+void ord_topologica (map<int, vector<int>> &adj_map, int V){
+    vector<int> rot_default(V, 0);
+    vector<bool> visited (V, false);
+    for (int u=0; u<V; u++)
+        if (visited[u] == false)
+            BFS(u, adj_map, visited, rot_default);
+}
+    \end{verbatim}
+
+\textbf{5- Componentes Fortemente Conexas:} irá calcular a quantidade de componentes conexas em um grafo DAG.
+    \begin{verbatim}
+    
+    \end{verbatim}
+
+\textbf{4- Floyd Warshall:} calcula as menores distâncias entre todos os vértices de um grafo.
+    \begin{verbatim}
+void floyd_warshall(int graph[][N], int N) {
+    int dist[N][N], i, j, k;
+
+    for (i = 0; i < N; i++)
+        for (j = 0; j < N; j++)
+            dist[i][j] = graph[i][j];
+
+    for (k = 0; k < N; k++) 
+        for (i = 0; i < N; i++) 
+            for (j = 0; j < N; j++) 
+                if (dist[i][k] + dist[k][j] < dist[i][j])
+                    dist[i][j] = dist[i][k] + dist[k][j];
+}
+    \end{verbatim}
+\pagebreak
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

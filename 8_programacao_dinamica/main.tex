@@ -1,0 +1,67 @@
+\section{Programação Dinâmica}
+    
+    \subsection{Fibonacci}
+        Exemplo clássico de programação dinâmica, reduzindo a complexidade do Fibonacci para O(n)
+\begin{verbatim}
+int Fibonacci(vector<int> &MEMO, int n){
+    if (MEMO[n] != -1)
+        return MEMO[n];
+    if (n == 1 || n==2){
+        MEMO [n] = 1;
+        return MEMO[n];
+    }
+    MEMO[n] = Fibonacci(MEMO, n-1) + Fibonacci(MEMO, n-2);
+    return MEMO[n];
+}
+
+vector<int> MEMO(n+1, -1);
+int result = Fibonacci(MEMO, n);    
+\end{verbatim}
+
+\subsection{Problema da mochila}
+    Selecionar um conjunto de itens (itens que possuem pesos e valores) de modo que o somatório dos valores seja máximo, respeitando a capacidade da mochila.
+\begin{verbatim}
+int mochila01 (int W, int N, vector<int>& peso, vector<int>& valor){
+    int MEMO [N+1][W+1];
+    for (int i=0; i<=N; i++)
+        for (int j=0; j<=W; j++)
+            MEMO[i][j] = 0;
+
+    for (int i=1; i<=N; i++){
+        for (int j=1; j<=W; j++){
+            if (peso[i] > j)
+                MEMO[i][j]=MEMO[i-1][j];
+            else
+                MEMO[i][j] = max(MEMO[i-1][j], MEMO[i-1][j-peso[i]]+valor[i]);
+        }
+    }
+    return (MEMO[N][W]);
+}
+\end{verbatim}
+
+\subsection{Longest Common Subsequence}
+Dada duas strings X e Y, calcula a maior sequência comum entre ambas.
+
+\begin{verbatim}
+//Essa função pode ser alterada para calcular a sequência de qualquer tipo.
+//Para se descobrir essa subsequência, deve-se criar uma matriz auxiliar de setas.
+int lcs (string X, string Y, int m, int n){
+    vector<vector<int>> MEMO (m+1, vector<int>(n+1, 0));
+
+    for (int i=0; i<=m; i++){
+        for (int j=0; j<=n; j++){
+            if (i == 0 || j==0)
+                MEMO[i][j] = 0;
+            else if (X[i-1] == Y[j-1])
+                MEMO[i][j] = MEMO[i-1][j-1] + 1;
+            else
+                MEMO[i][j] = max(MEMO[i-1][j], MEMO[i][j-1]);
+        }
+    }
+
+    return (MEMO[m][n]);
+}
+\end{verbatim}
+\pagebreak
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

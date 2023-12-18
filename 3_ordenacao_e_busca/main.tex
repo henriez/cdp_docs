@@ -1,0 +1,72 @@
+\section{Ordenação e Busca}
+
+\subsection{Insertion Sort}
+Complexidade O($n^2$);
+\begin{verbatim}
+void insertionSort (vector<int> &array, int size){
+    int i, key, j;
+    for (i=1; i<size; i++){
+        key = array[i];
+        j = i-1;
+        while (j>=0 && array[j] > key){
+            array[j+1] = array[j];
+            j=j-1;
+        }
+        array[j+1] = key;
+    }
+}
+\end{verbatim}
+
+\subsection{Merge Sort}
+Complexidade O(n log(n))
+\begin{verbatim}
+void merge(vector<int> &array, int left, int mid, int right){
+    vector<int> firstHalf (mid-left+1);
+    vector<int> secondHalf (right-mid);
+ 
+    for (int i=0; i < mid-left+1; i++)  
+        firstHalf[i] = array[left+i];
+    for (int i=0; i < right-mid; i++)
+        secondHalf[i] = array[mid + i + 1];
+
+    int j=0, k=0, i=left; 
+
+    while (j<mid-left+1 && k < right - mid){
+        if (firstHalf[j] <= secondHalf[k])
+            array[i++] = firstHalf[j++];
+        else
+            array[i++] = secondHalf[k++];
+    }
+
+    while (j < mid-left+1)
+        array[i++] = firstHalf[j++];
+    while (k < right-mid)
+        array[i++] = secondHalf[k++];
+}
+ 
+
+void mergeSort(vector<int> &array, int begin, int end){
+    if (begin >= end)
+        return;
+ 
+    int mid = (begin + end)/2;
+    mergeSort(array, begin, mid);
+    mergeSort(array, mid + 1, end);
+    merge(array, begin, mid, end);
+}
+\end{verbatim}
+
+\subsection{Binary Search}
+Para a realização da busca binária, é necessário que o vetor esteja inicialmente ordenado. Existem comandos da STL que facilitam a realização do processo.
+
+1. lower\_bound: retorna um iterator da primeira posição do vetor com um valor não menor que o desejado.
+\begin{verbatim}
+auto it = lower_bound(vec.begin(), vec.end(), wanted);
+\end{verbatim}
+
+1. upper\_bound: retorna um iterator apontando para o primeiro elemento maior que o valor desejado.
+\begin{verbatim}
+auto it = upper_bound(vec.begin(), vec.end(), wanted);
+\end{verbatim}
+
+

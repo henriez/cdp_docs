@@ -1,0 +1,24 @@
+\section{Outros}
+
+\subsection{MUF - Make Union Find}
+
+Algoritmo relacionado a conectividade em grafos e algoritmos de agrupamento. Ex: uva793.cpp
+
+\begin{verbatim}
+    #define MAX 11234567
+    int n, _p[MAX], _rank[MAX];
+    
+    // MUF - Make Union Find
+    
+    int _find(int u) { return _p[u] == u ? u : (_p[u] = _find(_p[u])); }
+    
+    void _union(int u, int v) {
+      u = _find(u); v = _find(v);
+      if (_rank[u] < _rank[v]) _p[u] = v;
+      else {
+        _p[v] = u;
+        if (_rank[u] == _rank[v]) _rank[u]++;
+      }
+    }
+\end{verbatim}
+

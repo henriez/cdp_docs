@@ -1,0 +1,40 @@
+\section{Template e Compilação}
+\subsection{Template}
+\begin{enumerate}
+    \item Diretório C++ que contém quase todos os comandos necessários
+        \begin{verbatim}
+        #include <bits/stdc++.h>
+        using namespace std;
+        \end{verbatim}
+    \item Comando para deixar operações do C++ como cin/cout mais rápidas.
+        \begin{verbatim}
+        cin.tie(0);
+        ios_base::sync_with_stdio(0);
+        \end{verbatim}
+    \item Template:
+    \begin{verbatim}
+        #include <bits/stdc++.h>
+        using namespace std;
+
+        int main(){
+            cin.tie(0);
+            ios_base::sync_with_stdio(0);
+
+            return 0;
+        }
+    \end{verbatim}
+    
+\end{enumerate}
+
+\subsection{Compilação}
+    \begin{enumerate}
+        \item Entrar no diretório que está o arquivo .cpp
+        \item Compilar (substituir "A.cpp" pelo arquivo .cpp em questão): 
+        \begin{verbatim}
+            g++ -g -static -Wall -O2 A.cpp
+        \end{verbatim}
+        \item Se Linux: executar o comando "./a.out $<$ tmp.in", onde tmp.in é o arquivo com as entradas\\
+    \end{enumerate}
+\pagebreak
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
