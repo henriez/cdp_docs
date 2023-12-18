@@ -14,15 +14,14 @@ Configuração do Ambiente de Desenvolvimento
 
 Recomendo o uso do Visual Studio Code (VSCode) como ambiente de desenvolvimento para trabalhar com projetos LaTeX. Siga estas etapas para configurar seu ambiente:
 
-    Instale o Visual Studio Code: Baixe e instale o Visual Studio Code.
+-Instale o Visual Studio Code: Baixe e instale o Visual Studio Code.
 
-    Instale a Extensão LaTeX Workshop: Abra o VSCode, vá para a seção de extensões, pesquise por "LaTeX Workshop" e instale a extensão fornecida pela James Yu.
+-Instale a Extensão LaTeX Workshop: Abra o VSCode, vá para a seção de extensões, pesquise por "LaTeX Workshop" e instale a extensão fornecida pela James Yu.
 
-    Clonando o Repositório: Clone este repositório para sua máquina local usando o seguinte comando:
+-Clonando o Repositório: Clone este repositório para sua máquina local usando o seguinte comando:
 
-  ```bash
-
-    git clone https://github.com/seu-usuario/seu-repositorio.git
+```bash
+  git clone https://github.com/seu-usuario/seu-repositorio.git
 
 
 Como Usar
