@@ -1,0 +1,79 @@
+\section{STL Stuffs}
+As estruturas Vector, List e Deque armazenam os elementos em ordem linear,
+seguindo a estrutura na qual foram inseridos.
+
+\subsection{Pair}
+Combinação de dois valores que podem (ou não) possuir tipos diferentes.
+\begin{verbatim}
+    pair <type1, type2> Pair_name 
+    //Criação de um pair.
+
+    pair <type1, type2> Pair_name (value1, value2) 
+    //Criação do um pair com valores já escritos.
+
+    pair pair_name (1, 'a') 
+    //Criação de um pair sem pré-determinar os tipos.
+
+    g2 = make_pair(1, 'a') 
+    //Atribuição de um pair (ideal para uso em vectors).
+\end{verbatim}
+
+\subsection{Vector}
+Vetor de alocação dinâmica, que possui os seguintes comandos principais:
+\begin{verbatim}
+    begin()
+    //Returns an iterator pointing to the first element.
+
+    end() 
+    //Returns an iterator pointing to the last element.
+
+    size() 
+    //Returns the number of elements in the vector.
+
+    empty() 
+    //Returns whether the container is empty.
+
+    front() 
+    //Returns a reference to the first element in the vector.
+
+    nome_vec[i] 
+    //Returns a reference to the element at position ‘i’ in the vector.
+
+    push_back(element) 
+    //Push the elements into a vector from the back.
+
+    pop_back() 
+    //Remove elements from a vector from the back.
+
+    insert(position, val) 
+    //Inserts new elements before the element at the specified position
+
+    clear() 
+    //Destroy all the elements of the vector.
+
+    erase(posIn, posFinal) 
+    //Remove elements from a container from the specified range (used with iterators).
+
+    emplace(position /*Iterator*/, element); 
+    //Insert a element at the position (allocate memory if needed).
+
+    emplace_back(value); 
+    //Insert a element at the end of the vector.
+\end{verbatim}
+
+\subsection{List}
+
+\subsection{Deque}
+
+\subsection{Stack}
+
+\subsection{Queue}
+
+\subsection{Priority Queue}
+
+\subsection{Map}
+
+\subsection{Set}
+
+
+\pagebreak
