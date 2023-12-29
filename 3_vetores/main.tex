@@ -3,19 +3,12 @@
 \subsection{Inicializacao}
 \subsubsection{1D}
 \begin{itemize}
-    \item \lstinline{memset(vetor, valor, n)}
-        \par Coloca \lstinline{valor} nas primeiras \lstinline{n} posições de \lstinline{v}.
+    \item \lstinline{vector<int> v(size, val);}
 \end{itemize}
 
 \subsubsection{2D}
 \begin{itemize}
-    \item Tamanhos dados por input:
-    \begin{verbatim}
-        int rows, columns
-        cin >> rows >> columns;
-        vector<vector<int> > a(rows, vector<int>(columns, 0));
-
-    \end{verbatim}
+    \item \lstinline{vector<vector<int> > a(rows, vector<int>(columns, 0));}
 \end{itemize}
 
 \subsection{Difference Array}

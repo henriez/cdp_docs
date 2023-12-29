@@ -1,20 +1,16 @@
 \section{Template e Compilação}
 \subsection{Template}
-\begin{enumerate}
-    \item Diretório C++ que contém quase todos os comandos necessários
-        \begin{verbatim}
-        #include <bits/stdc++.h>
-        using namespace std;
-        \end{verbatim}
-    \item Comando para deixar operações do C++ como cin/cout mais rápidas.
-        \begin{verbatim}
-        cin.tie(0);
-        ios_base::sync_with_stdio(0);
-        \end{verbatim}
+\begin{itemize}
     \item Template:
     \begin{verbatim}
         #include <bits/stdc++.h>
         using namespace std;
+
+        #define endl '\n'
+        #define ll long long
+        #define ii pair<int,int>
+
+        const int MAX = 212345;
 
         int main(){
             cin.tie(0);
@@ -23,17 +19,21 @@
             return 0;
         }
     \end{verbatim}
-    
-\end{enumerate}
+    \item Uma vez criado o template, para criar os arquivos da questão realizar o comando:
+    \begin{verbatim}
+        cp template.cpp X.cpp
+    \end{verbatim}
+
+\end{itemize}
 
 \subsection{Compilação}
     \begin{enumerate}
         \item Entrar no diretório que está o arquivo .cpp
         \item Compilar (substituir "A.cpp" pelo arquivo .cpp em questão): 
         \begin{verbatim}
-            g++ -g -static -Wall -O2 A.cpp
+            g++ A.cpp -Wall -O2
         \end{verbatim}
-        \item Se Linux: executar o comando "./a.out $<$ tmp.in", onde tmp.in é o arquivo com as entradas\\
+        \item Executar o comando "./a.out $<$ tmp.in", onde tmp.in é o arquivo com as entradas\\
     \end{enumerate}
 \pagebreak
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
