@@ -41,13 +41,15 @@ Vetor de alocação dinâmica, que possui os seguintes comandos principais:
     //Returns a reference to the element at position ‘i’ in the vector.
 
     push_back(element) 
-    //Push the elements into a vector from the back.
+    //Push the elements into a vector from the back. (copia o elemento)
 
     pop_back() 
     //Remove elements from a vector from the back.
 
-    insert(position, val) 
+    insert(index, val) 
     //Inserts new elements before the element at the specified position
+    //No casos envolvendo inserção de um caracter em uma string, deve-se usar 
+    str.insert(index, 1, 'char');
 
     clear() 
     //Destroy all the elements of the vector.
@@ -56,7 +58,7 @@ Vetor de alocação dinâmica, que possui os seguintes comandos principais:
     //Remove elements from a container from the specified range (used with iterators).
 
     emplace(position /*Iterator*/, element); 
-    //Insert a element at the position (allocate memory if needed).
+    //Insert a element at the position (constrói o elemento).
 
     emplace_back(value); 
     //Insert a element at the end of the vector.
@@ -64,9 +66,41 @@ Vetor de alocação dinâmica, que possui os seguintes comandos principais:
 
 \subsection{List}
 
+
 \subsection{Deque}
+    Lista que possui dois fins (um no começo e outro no final).
+    - Parecido com a fila, mas faz a inserção/remoção do começo/fim em O(1).
+\begin{verbatim}
+    deque_name.insert (iterator, value);
+    //Insere o elemento na posição do itarator.
+
+    deque_name.push_front(value);
+    deque_name.push_back(value);
+    //Adiciona um elemento no começo/fim do deque.
+
+    deque_name.pop_front();
+    deque_name.pop_back();
+    //Retira um elemento do começo/fim do deque. (possui tipo void).
+
+    deque_name.clear();
+    //Exclui todos os elementos do deque.
+
+    deque_name.erase(iterator1, iterator2);
+    //Exclui os elementos do intervalo delimitado.
+
+    deque_name.empty();
+    //Verifica se o deque está vazio.
+
+    deque_name.front();
+    deque_name.back();
+    //Acessa os elementos do começo/fim do deque.
+
+    deque_name.size();
+    //Verifica o tamanho do deque.
+\end{verbatim}
 
 \subsection{Stack}
+    Feito de acordo com os comandos padrões do vector.
 
 \subsection{Queue}
 
