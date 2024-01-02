@@ -1,62 +1,105 @@
 \section{Grafos}
 
-\subsection{\textbf{Map adjacência}} Implementação de uma lista de adjacência (sem classe/struct)
-    \begin{verbatim}
-        map<int, vector<int>> adj_map;
+\subsection{Lista de adjacências} 
 
-        void addEdge (map<int, vector<int>> adj_map, int u, int v){
-            adj_map[u].push_back(v);
+\par A estrutura utilizada é tal que as adjacências são da forma 
+g[u] = $\left\{w,v\right\}$. 
+O peso está em primeiro para facilitar um eventual sort.
+
+\begin{verbatim}
+        vector<vector<ii>> g(MAX);
+
+        // para adicionar aresta que conecta $u$ e $v$ com custo $w$ fazer:
+        g[u].push_back({w,v}); 
+        g[v].push_back({w,u}); 
+    \end{verbatim}
+
+\subsection{DFS:}
+\par Chamar uma dfs para cada vértice, da forma:
+\begin{verbatim}
+    for (int u = 0; u < n; u++) 
+        if (!vis[u]) dfs(u, u+1);
+\end{verbatim}
+Complexidade : $\mathcal{O}(V+E)$
+    \begin{verbatim}
+void dfs(int u, int val){
+    vis[u] = val;
+    for (auto &v : g[u])
+        if (!vis[v.second]) dfs(v.second,val);
+    
+}
+    \end{verbatim}
+
+\subsection{BFS}
+\par Salva as distâncias a partir do vértice de início s.\\
+\samepage
+Complexidade : $\mathcal{O}(V+E)$
+\begin{verbatim}
+    void bfs(int s){
+        d[s] = 0;
+        queue<int> q; q.push(s);
+        while(!q.empty()){
+            int u = q.front(); q.pop();
+            for (auto &v : g[u])
+                if (d[v.second] == INF){
+                    d[v.second] = d[u]+1;
+                    q.push(v.second);
+                }
         }
-    \end{verbatim}
+    }
+    
+\end{verbatim}
 
-\textbf{2- DFS:} busca em profundidade de grafos (depth-first search)
-    \begin{verbatim}
-void visit (int u, map<int, vector<int>> &adj_map, vector<bool> &visited){
-    visited[u] = true;
+\subsection{Ordenação Topológica} 
+Atribui rótulos aos vértices de um grafo DAG de modo que para toda aresta (u, v), 
+u.rótulo $<$ v.rótulo. Utiliza uma DFS com pequena variação:
+\par ATENÇÃO: esse código salva a ordem topológia reversa.
+\begin{verbatim}
+    vector<int> ts; // topological sort
+    
+    void dfs(int u, int val){
+        if (vis[u]) return;
+        vis[u] = val;
+        for (auto &v : g[u])
+            if (!vis[v.second]) dfs(v.second,val);
         
-    vector<int>::iterator i;
-    for (i = adj_map[u].begin(); i != adj_map[u].end(); ++i)
-        if (!visited[*i])
-            visit(*i, adj_map, visited);
-}
+        ts.push_back(u);   
+    }
+\end{verbatim}
+
+\subsection{Componentes Conexas}
+\par Código que conta a quantidade de componentes conexas e marca cada vértice com o valor de sua componente.
+\begin{verbatim}
+    int ans = 0;
+    for (int u = 0; u < n; u++)
+        if (!vis[i]) dfs(u, ++ans);
+        
     
-void DFS(map<int, vector<int>> &adj_map, int V){
-    vector<bool> visited(V, false);
-    for (int u=0; i<V; u++)
-        if (visited[u]==false)
-            visit(u, adj_map, visited);
-}
-    \end{verbatim}
+\end{verbatim}
 
-\textbf{3- BFS:} busca em largura de grafos (breadth-first search)
-    \begin{verbatim}
-    
-    \end{verbatim}
+\subsection{Checagem de grafo bipartido}
+\par Para checar se um grafo é bipartido, "colorimos" ele com uma BFS modificada.
+\begin{verbatim}
+    bool bfs(){
+        color[s] = 0;
+        bool isBipartite = true;
+        queue<int> q; q.push(s);
+        while(!q.empty() && isBipartite){
+            int u = q.front(); q.pop();
+            for (auto &v : g[u]){
+                if (color[v.second] == INF){
+                    color[v.second] = 1-color[u];
+                    q.push(v.second);
+                }
+                else if (color[v.second] == color[u]{
+                    isBipartite = false; break;
+                }
+            }
+        }
+        return isBipartite;
+    }
+\end{verbatim}
 
-\textbf{4- Ordenação Topológica:} atribui rótulos aos vértices de um grafo DAG de modo que para toda aresta (u, v), u.rótulo $<$ v.rótulo.
-    \begin{verbatim}
-void BFS (int u, map<int, vector<int>> &adj_map, vector<bool> &visited, vector<int> &rot_default){
-    visited[u] = true;
-    vector<int>::iterator i;
-    for (i=adj_map[u].begin(); i!=adj_map[u].end(); ++i)
-        if (!visited[*i])
-            BFS(*i, adj_map, visited, rot_default);
-    rot_default[u] = rotulo++;
-}
-
-void ord_topologica (map<int, vector<int>> &adj_map, int V){
-    vector<int> rot_default(V, 0);
-    vector<bool> visited (V, false);
-    for (int u=0; u<V; u++)
-        if (visited[u] == false)
-            BFS(u, adj_map, visited, rot_default);
-}
-    \end{verbatim}
-
-\textbf{5- Componentes Fortemente Conexas:} irá calcular a quantidade de componentes conexas em um grafo DAG.
-    \begin{verbatim}
-    
-    \end{verbatim}
 
 \textbf{4- Floyd Warshall:} calcula as menores distâncias entre todos os vértices de um grafo.
     \begin{verbatim}
@@ -77,3 +120,4 @@ void floyd_warshall(int graph[][N], int N) {
 \pagebreak
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+git 

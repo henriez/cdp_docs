@@ -1,5 +1,5 @@
 *.pdf
-*.fdb_latex_mk
+*.fdb_latexmk
 *.fls
 *.log
 *.synctex.gz
