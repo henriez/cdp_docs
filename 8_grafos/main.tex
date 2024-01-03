@@ -102,27 +102,56 @@ u.rótulo $<$ v.rótulo. Utiliza uma DFS com pequena variação:
 \subsection{Árvores Geradoras Mínimas - MST}
 \subsubsection{Kruskal}
 Utiliza MUF para unir as arestas e seus vértices.
-Complexidade : $\mathcal{O}(E\log V)$
+Complexidade: $\mathcal{O}(E\log V)$
 \begin{verbatim}
     int kruskal(){
-    int cost = 0, u, v, w;
-    for (int i = 0; i < n; i++) {_p[i]=i; _rank[i]=0;}
-    sort(edges.begin(), edges.end());
-    for (auto &e : edges){
-        u = e.second.first;
-        v = e.second.second;
-        w = e.first;
-        if (_find(u) != _find(v)){
-            cost += w;
-            _union(u, v);
+        int cost = 0, u, v, w;
+        for (int i = 0; i < n; i++) {_p[i]=i; _rank[i]=0;}
+        sort(edges.begin(), edges.end());
+        for (auto &e : edges){
+            u = e.second.first;
+            v = e.second.second;
+            w = e.first;
+            if (_find(u) != _find(v)){
+                cost += w;
+                _union(u, v);
+            }
         }
+        return cost;
     }
-    return cost;
-}
 
 \end{verbatim}
 \subsubsection{Prim}
-\textbf{4- Floyd Warshall:} calcula as menores distâncias entre todos os vértices de um grafo.
+\par Utiliza fila de prioridade e lista de adjacência para escolher novo vértice com aresta de menor peso.
+Complexidade: $\mathcal{O}(E\log V)$
+
+\begin{verbatim}
+    vi taken(MAX);
+
+    int prim(){
+        priority_queue<ii> pq;
+        taken[0] = 1;
+        for (auto &v : g[0])
+            if (!taken[v.second]) pq.push({-v.first, -v.second});  
+    
+        int cost = 0;
+        while(!pq.empty()){
+            ii front = pq.top(); pq.pop();
+            int w = -front.first;
+            int u = -front.second;
+            if (!taken[u]) {
+                cost += w;
+                taken[u] = 1;
+                for (auto &v : g[u])
+                    if (!taken[v.second]) pq.push({-v.first, -v.second});  
+            }
+        }
+        return cost;
+    }
+    
+\end{verbatim}
+\subsection{Caminhos mínimos}
+\subsubsection{4- Floyd Warshall:} calcula as menores distâncias entre todos os vértices de um grafo.
     \begin{verbatim}
 void floyd_warshall(int graph[][N], int N) {
     int dist[N][N], i, j, k;
