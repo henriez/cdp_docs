@@ -32,7 +32,6 @@ void dfs(int u, int val){
 
 \subsection{BFS}
 \par Salva as distâncias a partir do vértice de início s.\\
-\samepage
 Complexidade : $\mathcal{O}(V+E)$
 \begin{verbatim}
     void bfs(int s){
@@ -100,7 +99,29 @@ u.rótulo $<$ v.rótulo. Utiliza uma DFS com pequena variação:
     }
 \end{verbatim}
 
+\subsection{Árvores Geradoras Mínimas - MST}
+\subsubsection{Kruskal}
+Utiliza MUF para unir as arestas e seus vértices.
+Complexidade : $\mathcal{O}(E\log V)$
+\begin{verbatim}
+    int kruskal(){
+    int cost = 0, u, v, w;
+    for (int i = 0; i < n; i++) {_p[i]=i; _rank[i]=0;}
+    sort(edges.begin(), edges.end());
+    for (auto &e : edges){
+        u = e.second.first;
+        v = e.second.second;
+        w = e.first;
+        if (_find(u) != _find(v)){
+            cost += w;
+            _union(u, v);
+        }
+    }
+    return cost;
+}
 
+\end{verbatim}
+\subsubsection{Prim}
 \textbf{4- Floyd Warshall:} calcula as menores distâncias entre todos os vértices de um grafo.
     \begin{verbatim}
 void floyd_warshall(int graph[][N], int N) {
