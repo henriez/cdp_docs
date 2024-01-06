@@ -150,8 +150,83 @@ Complexidade: $\mathcal{O}(E\log V)$
     }
     
 \end{verbatim}
-\subsection{Caminhos mínimos}
-\subsubsection{4- Floyd Warshall:} calcula as menores distâncias entre todos os vértices de um grafo.
+\subsection{Caminhos mínimos}\
+
+\subsubsection{Dijkstra}
+Complexidade: $\mathcal{O}(E\log V)$
+
+\begin{verbatim}
+    void dijkstra(int s){
+        int d, u, v;
+        for (int i = 0; i < n; i++) dist[i] = INF;
+        priority_queue<ii, vector<ii>, greater<ii>> pq;
+        pq.push({0,s});
+        while(!pq.empty()){
+            d = pq.top().first;
+            u = pq.top().second;
+            pq.pop();
+            if (d > dist[u]) continue;
+
+            for (auto &x : adj[u]){
+                d = x.first;
+                v = x.second;
+                if (dist[v] > dist[u] + d){
+                    dist[v] = dist[u] + d; 
+                    pq.push({dist[v], v});
+                }   
+            }
+        }
+    }
+
+\end{verbatim}
+
+\subsubsection{Belmann-Ford}
+\par Pode ser utilizado para detectar ciclos negativos.
+Complexidade: $\mathcal{O}(EV)$
+
+\begin{verbatim}
+    void belmann_ford(int s){
+        for (int i = 0; i < V; i++) dist[i] = INF;
+        dist[s] = 0;
+        for (int i = 0; i < V; i++)
+            for (int u = 0; u < V; u++)
+                for (auto &v : adj[u])
+                    dist[v.second] = min(dist[v.second], dist[u]+v.first);
+    }
+\end{verbatim}
+
+\par Para detectar ciclos negativos, executar mais uma varredura, de forma que o código 
+fique da seguinte maneira:
+
+\begin{verbatim}
+    void belmann_ford(int s){
+        for (int i = 0; i < V; i++) dist[i] = INF;
+        dist[s] = 0;
+        for (int i = 0; i < V; i++)
+            for (int u = 0; u < V; u++)
+                for (auto &v : adj[u])
+                    dist[v.second] = min(dist[v.second], dist[u]+v.first);
+    }
+
+    int main(){
+        ...
+
+        bellmann_ford(s);
+
+        bool hasNegativeCycle = false;
+        for (int u = 0; u < V; u++)
+            for (auto &v : adj[u])
+                if (dist[v].second > dist[u]+v.first)
+                    hasNegativeCycle = true;
+
+        if (hasNegativeCycle) cout << "CYCLE" << endl;
+        else cout << "NO CYCLE" << endl;
+        ...
+    }
+\end{verbatim}
+
+
+\subsubsection{Floyd Warshall} calcula as menores distâncias entre todos os vértices de um grafo.
     \begin{verbatim}
 void floyd_warshall(int graph[][N], int N) {
     int dist[N][N], i, j, k;
