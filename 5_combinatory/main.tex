@@ -1,7 +1,31 @@
 \section{Combinatória}
 
+\subsection{Permutação}
+    Dados um conjunto com n caixas iguais, queremos saber as diferentes formas de organizar n bolas.
+    
+    É descobrir todas as permutações por meio de uma função da STL de complexidade $O(n*n!)$
+\begin{verbatim}
+bool next_permutation (Iterator 1, Iterator 2);
+//Rearranja os elementos na próxima permutação, sendo essa a menor 
+possível maior que a atual (no quesito lexicográfico); retornando 
+se a operação foi bem sucedida ou não.    
+\end{verbatim}
+    
+    \subsubsection{Permutação sem repetição}
+    \begin{equation}
+        \centering
+        P(n) = n!
+    \end{equation}
+
+    \subsubsection{Permutação com repetição}
+    \begin{equation}
+        \centering
+        P(n, k, l, ...) = n!/k!l!...
+    \end{equation}
+    k, l,... representam a quantidade de vezes que a bola (k, l, ...) se repete
+
 \subsection{Combinação}
-    Dados um conjunto com n caixas iguais, queremos saber as possibilidades para se colocar 2 bolas iguais dentro delas\newline
+    Dados um conjunto com n caixas iguais, queremos saber as possibilidades para se colocar k bolas iguais dentro delas\newline
     \begin{equation}
         \centering
         C(n, k) = \frac{n!}{k!(n-k)!}
