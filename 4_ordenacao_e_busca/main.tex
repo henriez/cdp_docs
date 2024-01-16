@@ -65,16 +65,31 @@ void mergeSort(vector<int> &array, int begin, int end){
 \end{verbatim}
 
 \subsection{Binary Search}
-Para a realização da busca binária, é necessário que o vetor esteja inicialmente ordenado. Existem comandos da STL que facilitam a realização do processo.
+Para a realização da busca binária, é necessário que o vetor esteja inicialmente ordenado. Existem comandos da STL que facilitam a realização do processo.\\
 
+-- UTILIZANDO VECTOR --
 1. lower\_bound: retorna um iterator da primeira posição do vetor com um valor não menor que o desejado.
 \begin{verbatim}
 auto it = lower_bound(vec.begin(), vec.end(), wanted);
 \end{verbatim}
 
-1. upper\_bound: retorna um iterator apontando para o primeiro elemento maior que o valor desejado.
+2. upper\_bound: retorna um iterator apontando para o primeiro elemento maior que o valor desejado.
 \begin{verbatim}
 auto it = upper_bound(vec.begin(), vec.end(), wanted);
 \end{verbatim}
+- Nos casos em que todos os valores sejam menores que "wanted" a função retorna um iterador apontando para o último elemento do vector + 1.\\
+
+-- UTILIZANDO SET -- (utilizar as funções abaixo, caso contrário existem casos O(n))
+
+1. lower\_bound: retorna um iterator da primeira posição do vetor com um valor não menor que o desejado.
+\begin{verbatim}
+auto it = set_name.lower_bound(wanted);
+\end{verbatim}
+
+2. upper\_bound: retorna um iterator apontando para o primeiro elemento maior que o valor desejado.
+\begin{verbatim}
+auto it = set_name.upper_bound(wanted);
+\end{verbatim}
+- Nos casos em que todos os valores sejam menores que "wanted" a função retorna um iterador apontando para o último elemento do vector + 1.
 
 
