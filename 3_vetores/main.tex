@@ -43,6 +43,32 @@
     }
 \end{verbatim}
 
+\subsection{Prefix Sum}
+    Verifica se é possível determinado valor de soma ocorrer considerando qualquer subintervalor de um vetor.
+    - Possui complexidade O(n).
+
+\begin{verbatim}
+bool prefix_sum(vector<int>& numbers, int size){
+    int wanted = 0; //Can be any sum wanted.
+    set<long long> sumSet; long long sum = 0; 
+
+    for (int i=0; i<size; i++){
+        sum += numbers[i];
+        if (sum == wanted || sumSet.find(sum - wanted) != sumSet.end())
+            return true;
+
+        sumSet.insert(sum);
+    }
+    
+    return false;
+}
+\end{verbatim}
+
+
+
+
+
+
 \subsection{Segment tree}
 \par Extensivamente utilizada para fazer operações em intervalos de vetores, tanto atualização como consultas sao feitas em $O(\log n)$. \\
 Um teste com $n$ operações de consulta implementadas linearmente criariam um algoritmo $O(n^2)$, enquanto aplicando SegTree, $n$ operações geram um algoritmo $O(n\log n)$.
