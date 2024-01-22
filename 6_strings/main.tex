@@ -26,6 +26,32 @@
     string str = to_string(x);
 \end{verbatim}
 
+\subsection{Leitura}
+Para se fazer a leitura de uma palavra, pode-se utilizar cin$>>$str. No entanto, 
+esse comando não permite a leitura de uma frase, que deve ser feita utilizando 
+o comando abaixo
+\begin{verbatim}
+    getline(cin, s).
+\end{verbatim}
+Além disso, sempre um cin for utilizado antes do getline, deve-se utilizando o comando
+a seguir para "limpar" a entrada
+\begin{verbatim}
+    cin.ignore()
+\end{verbatim}
+Desta forma, para uma leitura no estilo t / t frases temos:
+\begin{verbatim}
+    int t; cin>>t; cin.ignore()
+    while (t-->0){
+        string str;
+        getline(cin, str);
+    }
+\end{verbatim}
+Ademais, para fazer o uso de strings com acento deve-se utilizar o comando
+\begin{verbatim}
+    setlocale(LC_ALL, "pt_BR.UTF-8");
+\end{verbatim}
+
+\includegraphics[scale=1.0]{ASCII.png}
 \pagebreak
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
