@@ -175,6 +175,29 @@ vector<int> fatoracao (int n){
     }
 \end{verbatim}
 
+\subsection{Crivo de Eratóstenes}
+Algoritmo que calcula todos os números primos entre 1..N em complexidade \\
+ O(n*log(log n)).
+\begin{verbatim}
+    
+// C++ program to print all primes smaller than or equal to
+// n using Sieve of Eratosthenes
+#include <bits/stdc++.h>
+using namespace std;
+ 
+    void SieveOfEratosthenes(int n)
+    {
+        vector<bool> primo(n+1, true);
+    
+        for (int p = 2; p * p <= n; p++) {
+            if (prime[p] == true) {
+                for (int i = p * p; i <= n; i += p)
+                    prime[i] = false;
+            }
+        }
+    }
+\end{verbatim}
+
 
 
 \pagebreak

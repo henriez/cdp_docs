@@ -65,6 +65,15 @@ void mergeSort(vector<int> &array, int begin, int end){
 
     - Para se fazer a ordenação em ordem decrescente usa-se:
     sort (vector_name.begin(), vector_name.end(), greater<int>());
+
+    - Caso queiramos fazer nossa própria função de ordenação, podemos utilizar:
+    sort(vector_name.begin(), vector_name.end(), function_name);
+
+    bool (vector_type i1, vector_type i2){
+        //CÓDIGO AQUI
+        return true; //Se a ordem já estiver certa.
+        return false; //Se a ordem estiver errada.
+    }
 \end{verbatim}
 
 \subsection{Binary Search}
@@ -95,4 +104,18 @@ auto it = set_name.upper_bound(wanted);
 \end{verbatim}
 - Nos casos em que todos os valores sejam menores que "wanted" a função retorna um iterador apontando para o último elemento do vector + 1.
 
+Nos casos em que se faz necessário codar a busca binária, segue a função:
+\begin{verbatim}
+    int binarySearch(vector<int>& arr, int low, int high, int wanted) 
+    { 
+        while (low <= high) { 
+            int mid = (high + low)/2; 
+
+            if (arr[mid] == wanted) {return mid;} 
+            if (arr[mid] < wanted) {low = mid + 1;}  
+            else {high = mid - 1;} 
+        } 
+        return -1; 
+    } 
+\end{verbatim}
 

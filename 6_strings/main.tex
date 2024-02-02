@@ -26,6 +26,12 @@
     string str = to_string(x);
 \end{verbatim}
 
+\subsection{int to char}
+\par Para converter um int x em um char, fazemos:
+\begin{verbatim}
+    char c = '0' + x;
+\end{verbatim}
+
 \subsection{Leitura}
 Para se fazer a leitura de uma palavra, pode-se utilizar cin$>>$str. No entanto, 
 esse comando não permite a leitura de uma frase, que deve ser feita utilizando 
@@ -46,12 +52,34 @@ Desta forma, para uma leitura no estilo t / t frases temos:
         getline(cin, str);
     }
 \end{verbatim}
-Ademais, para fazer o uso de strings com acento deve-se utilizar o comando
+Ademais, para fazer o uso de strings com acento deve-se utilizar os comandos
 \begin{verbatim}
-    setlocale(LC_ALL, "pt_BR.UTF-8");
+    setlocale(LC_ALL, "pt_BR.UTF-8"); wcin; wcout; e wstring;
+\end{verbatim}
+Não sendo possível utilizar esses comandos separadamente ou com os comandos
+básicos do template para C++.
+
+Além disso, também há o comando stringstream, esse que por sua vez tem o objetivo de
+receber uma string na construtora e acessar ela palavra/número por palavra/número.
+\begin{verbatim}
+    string str; getline(cin, str);
+    stringstream leitura(str);
+    int num;
+    while(leitura >> num){nome_vector.push_back(num);}
+    //Código que separa todos os números de uma string em um vector.
 \end{verbatim}
 
-\includegraphics[width=130mm]{6_strings/ASCII.png}[H]
+\subsection{Find}
+Dada uma string S e uma substring k, para descobrirmos o índice de início de k em S, 
+utilizamos o seguinte comando,
+\begin{verbatim}
+    int pos = s.find(k);
+    if (pos == npos){Não é substring}
+\end{verbatim}
+
+
+
+\includegraphics[width=130mm]{6_strings/ASCII.png}
 \pagebreak
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

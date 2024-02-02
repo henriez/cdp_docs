@@ -63,6 +63,10 @@ Vetor de alocação dinâmica, que possui os seguintes comandos principais:
 
     emplace_back(value); 
     //Insert a element at the end of the vector.
+
+    auto it = find(vetor.begin(), vetor.end(), valorProcurado);
+    //Encontra o iterator da posição que tem valor = valorProcurado.
+    //Retorna vetor.end() caso não encontre.
 \end{verbatim}
 
 \subsection{List}
@@ -108,6 +112,10 @@ Vetor de alocação dinâmica, que possui os seguintes comandos principais:
 \subsection{Priority Queue}
 
 \subsection{Map}
+\begin{verbatim}
+    for(auto& it:map_name)
+    //Faz a iteração no map.
+\end{verbatim}
 
 \subsection{Set}    
     erase(posIn, posFinal) 
