@@ -118,9 +118,21 @@ Vetor de alocação dinâmica, que possui os seguintes comandos principais:
 \end{verbatim}
 
 \subsection{Set}    
-    erase(posIn, posFinal) 
-    //Remove elements from a container from the specified range (used with iterators).
-    - Feito em tempo O(1).
+    O set é utilizado para a criação de "vetores" ordenados.
+    \begin{verbatim}
+        /*Criação do set*/
+        set<type> name_set; 
+
+        /*Inserção - feita em tempo log(n)*/
+        name_set.insert(k);
+
+        /*Find - feito em tempo log(n)*/
+        auto it = name_set.find(k);
+
+        /*Erase - feito em tempo O(1)*/
+        name_set.erase(iterador_inicial, iterador_final);
+        name_set.erase(iteradorUnico);
+    \end{verbatim}
 
 \subsection{MultiSet} 
 

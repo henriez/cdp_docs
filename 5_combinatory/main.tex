@@ -1,11 +1,24 @@
 \section{Combinatória}
 
+\subsection{Princípio da Contagem}
+    \subsubsection{Princípio da Multiplicação}
+        Se um evento A pode ocorrer de M maneiras diferentes e um evento B pode ocorrer de N maneiras diferentes,
+        então existem $M*N$ combinações desses elementos (calças e camisetas).
+
+    \subsubsection{Lei da Multiplicação}
+        Se um evento A possui probabilidade M e um evento B possui probabilidade N,
+        então a probabilidade de A e B ocorrerem é de $A*B$.
+
+    \subsubsection{Princípio da Adição}
+        Se um evento A possui probabilidade M e um evento B possui probabilidade N,
+        então a probabilidade de A ou B ocorrerem é de $A+B$.
+
 \subsection{Permutação}
-    Dados um conjunto com n caixas iguais, queremos saber as diferentes formas de organizar n bolas.
+    Dados um conjunto com n caixas iguais, queremos saber as diferentes formas de organizar n bolas distintas $(qtdBolas = qtdCaixas)$
     
     É descobrir todas as permutações por meio de uma função da STL de complexidade $O(n*n!)$
 \begin{verbatim}
-bool next_permutation (Iterator 1, Iterator 2);
+bool next_permutation (Iterator begin, Iterator end);
 //Rearranja os elementos na próxima permutação, sendo essa a menor 
 possível maior que a atual (no quesito lexicográfico); retornando 
 se a operação foi bem sucedida ou não.    
@@ -25,9 +38,19 @@ se a operação foi bem sucedida ou não.
     k, l,... representam a quantidade de vezes que a bola (k, l, ...) se repete
 
 \subsection{Combinação}
-    Dados um conjunto com n caixas iguais, queremos saber as possibilidades para se colocar k bolas iguais dentro delas\newline
+    Permutação onde a quantidade de bolas (n) é maior que a quantidade de caixas (k), além de que a 
+    ordem das bolas não faz diferença.\newline
     \begin{equation}
         \centering
         C(n, k) = \frac{n!}{k!(n-k)!}
     \end{equation}
+
+\subsection{Arranjo Simples}
+    Permutação onde a quantidade de bolas (n) é maior que a quantidade de caixas (p), além de que a 
+    ordem das bolas faz diferença.\newline
+\begin{equation}
+    \centering
+    C(n, k) = \frac{n!}{(n-p)!}
+\end{equation}
         
+
