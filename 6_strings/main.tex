@@ -1,7 +1,5 @@
 \section{Strings}
 
-\subsection{Comandos básicos}
-
 \subsection{Substrings}
 
 \par A função substr de string retorna uma substring interna da string inicial, os parâmetros são:
@@ -15,15 +13,8 @@
 \end{verbatim}
 
 \subsection{char to int}
-\par Para converter um char (i-ésimo char da string) em int, é possível fazer:
 \begin{verbatim}
-    int x = str[i] - '0';
-\end{verbatim}
-
-\subsection{int to string}
-\par Para converter um int x em uma string com seus algarismos, fazemos:
-\begin{verbatim}
-    string str = to_string(x);
+    int x = s[i] - '0';
 \end{verbatim}
 
 \subsection{int to char}
@@ -31,6 +22,32 @@
 \begin{verbatim}
     char c = '0' + x;
 \end{verbatim}
+
+\subsection{int to string}
+\begin{verbatim}
+    string str = to_string(x);
+\end{verbatim}
+
+\subsubsection{int128 to string}
+Em casos muito específicos em que é necessário um inteiro de 128 bits, cout não aceita esse inteiro, para isso o convertemos em string.
+\begin{verbatim}
+    string to_string128(__int128_t t){
+        string ans;
+        while (t > 0){
+            ans += ('0'+t%10);
+            t /= 10;
+        }
+        reverse(ans.begin(), ans.end());
+        return ans;
+    }
+\end{verbatim}
+
+
+\subsection{string to int}
+\begin{verbatim}
+    int n = stoi(s);
+\end{verbatim}
+
 
 \subsection{Leitura}
 Para se fazer a leitura de uma palavra, pode-se utilizar cin$>>$str. No entanto, 
