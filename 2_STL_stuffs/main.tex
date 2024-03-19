@@ -136,4 +136,14 @@ Vetor de alocação dinâmica, que possui os seguintes comandos principais:
 
 \subsection{MultiSet} 
 
+\subsection{Bitset}
+    Maneira de armazenar uma string binária de forma eficiente, com complexidade O(n/32) e O(n/64). A utilização pode ser feita da mesma forma que vetores, com a condição da estrutura favorecer operações bit a bit.
+
+    Transformação de número em bitset (número binário)
+    \begin{verbatim}
+bitset<n> nome(k); 
+/*criar bitset de tamanho n (conhecido em tempo de compilação) 
+que armazena o número k.*/
+    \end{verbatim}
+
 \pagebreak
