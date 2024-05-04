@@ -64,7 +64,22 @@ bool prefix_sum(vector<int>& numbers, int size){
 }
 \end{verbatim}
 
+\subsection{Maximum Contiguous Subarray Sum}
 
+Soma máxima de subvetor contíguo em O(n). O código pode ser facilmente alterado para guardar os índices do intervalo
+
+\begin{verbatim}
+    vi v(n);
+    vi maxSum(n,-INF);
+
+    int ans = maxSum[0] = v[0];
+    for (int i = 1; i < n; i++) {
+        maxSum[i] = max(maxSum[i-1]+v[i], v[i]);
+        ans = max(ans, maxSum[i]);
+    }
+    cout << ans << endl;
+
+\end{verbatim}OBS: o vetor maxSum não é necessário, pode ser substituido por uma única variável
 
 
 
