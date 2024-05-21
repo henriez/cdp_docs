@@ -57,23 +57,23 @@ void mergeSort(vector<int> &array, int begin, int end){
 \end{verbatim}
 
 \subsection{STL Sort}
-    Ordena os elementos de um vector em complexidade O(n*log(n))
+    Ordena os elementos de um vector em complexidade $\mathcal{O}(n\log n)$
 \begin{verbatim}
     sort (Iterator_begin, Iterator_first);
-    //Geralmente utilizado da seguinte forma,
-    sort (vector_name.begin(), vector_name.end());
+    
+    // Ordenação crescente
+    sort v.begin(), v.end());
 
-    - Para se fazer a ordenação em ordem decrescente usa-se:
-    sort (vector_name.begin(), vector_name.end(), greater<int>());
+    // Ordenação decrescente
+    sort (v.begin(), v.end(), greater<int>());
+    sort (v.rbegin(), v.rend());
 
     - Caso queiramos fazer nossa própria função de ordenação, podemos utilizar:
-    sort(vector_name.begin(), vector_name.end(), function_name);
+    sort(v.begin(), v.end(), [](T a, T b){
+        // return true se a vem antes de b
+        // return false se a vem depois de b
+    });
 
-    bool (vector_type i1, vector_type i2){
-        //CÓDIGO AQUI
-        return true; //Se a ordem já estiver certa.
-        return false; //Se a ordem estiver errada.
-    }
 \end{verbatim}
 
 \subsection{Binary Search}

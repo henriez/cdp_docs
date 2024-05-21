@@ -1,3 +1,4 @@
+
 \section{Template e Compilação}
 \subsection{Template}
 \begin{itemize}
@@ -6,21 +7,25 @@
         #include <bits/stdc++.h>
         using namespace std;
 
-        #define fast_io ios_base::sync_with_stdio(false); 
-        cin.tie(NULL); cout.tie(NULL)
+        #define int long long int
         #define endl '\n'
-        #define ll long long
         #define ii pair<int,int>
+        #define iii pair<ii, int>
+        #define vi vector<int>
+        #define vii vector<ii>
 
-        const int MAX = 212345;
+        void solve(){
 
-        int main(){
-            fast_io;
+        }
 
+        signed main(){
+            cin.tie(0); cout.tie(0);
+            ios_base::sync_with_stdio(0);
+            solve();
             return 0;
         }
     \end{verbatim}
-    \item Uma vez criado o template, para criar os arquivos da questão realizar o comando:
+    \item Uma vez criado o template, para criar os arquivos da questão rode o comando:
     \begin{verbatim}
         cp template.cpp X.cpp
     \end{verbatim}
@@ -32,9 +37,9 @@
         \item Entrar no diretório que está o arquivo .cpp
         \item Compilar (substituir "A.cpp" pelo arquivo .cpp em questão): 
         \begin{verbatim}
-            g++ A.cpp -Wall -O2
+            g++ a.cpp -Wall -O2
         \end{verbatim}
-        \item Executar o comando "./a.out $<$ tmp.in", onde tmp.in é o arquivo com as entradas\\
+        \item Executar o comando "./a.out $<$ tmp.in", onde tmp.in é o arquivo com as entradas.
     \end{enumerate}
 \pagebreak
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

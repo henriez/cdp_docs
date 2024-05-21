@@ -61,15 +61,13 @@ Vetor de alocação dinâmica, que possui os seguintes comandos principais:
     emplace(position /*Iterator*/, element); 
     //Insert a element at the position (constrói o elemento).
 
-    emplace_back(value); 
+    push_back(value); 
     //Insert a element at the end of the vector.
 
     auto it = find(vetor.begin(), vetor.end(), valorProcurado);
     //Encontra o iterator da posição que tem valor = valorProcurado.
     //Retorna vetor.end() caso não encontre.
 \end{verbatim}
-
-\subsection{List}
 
 
 \subsection{Deque}
@@ -105,36 +103,74 @@ Vetor de alocação dinâmica, que possui os seguintes comandos principais:
 \end{verbatim}
 
 \subsection{Stack}
-    Feito de acordo com os comandos padrões do vector.
+
+\begin{verbatim}
+    stack<int> s;
+    s.push(x);
+    int x = s.top();
+    s.pop();
+\end{verbatim}
 
 \subsection{Queue}
+
+\begin{verbatim}
+    queue<int> q;
+    q.push(x);
+    int x = q.front();
+    q.pop();
+\end{verbatim}
 
 \subsection{Priority Queue}
 
 \subsection{Map}
 \begin{verbatim}
-    for(auto& it:map_name)
-    //Faz a iteração no map.
+    for(auto [key, value] : map)
+
+    map.count(x);
+    // checa se x está no mapa como chave retorna 0 se não estiver
+
+    map.find(x);
+    // procura value x, retorna iterador, retorna map.end() se não encontrar
+
+    map.lower_bound(x);
+    // retorna iterador para último elemento <= x
+
+    map.upper_bound(x);
+    // retorna interador para primeiro elemento > x
+    
+
 \end{verbatim}
 
 \subsection{Set}    
-    O set é utilizado para a criação de "vetores" ordenados.
+    O set é utilizado para a criação de "vetores" ordenados. NÃO permite duplicatas
     \begin{verbatim}
-        /*Criação do set*/
-        set<type> name_set; 
+        set<int> set; 
 
-        /*Inserção - feita em tempo log(n)*/
+        // O(log n)
         name_set.insert(k);
 
-        /*Find - feito em tempo log(n)*/
-        auto it = name_set.find(k);
+        // O(log n)
+        auto it = set.find(k);
 
-        /*Erase - feito em tempo O(1)*/
-        name_set.erase(iterador_inicial, iterador_final);
-        name_set.erase(iteradorUnico);
+        // O(1)
+        set.erase(it);
+
+        // O(log n)
+        set.erase(k);
+
+        // O(n) - n = final-inicial
+        set.erase(it_inicial, it_final)
+        
+        // O(log n)
+        set.lower_bound(x);
+
+        // O(log n)
+        set.upper_bound(x);
     \end{verbatim}
 
 \subsection{MultiSet} 
+
+Muito semelhante ao set, mas permite duplicatas
 
 \subsection{Bitset}
     Maneira de armazenar uma string binária de forma eficiente, com complexidade O(n/32) e O(n/64). A utilização pode ser feita da mesma forma que vetores, com a condição da estrutura favorecer operações bit a bit.
