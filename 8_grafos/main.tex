@@ -158,7 +158,7 @@ Complexidade: $\mathcal{O}(E\log V)$
 \begin{verbatim}
     void dijkstra(int s){
         int d, u, v;
-        for (int i = 0; i < n; i++) dist[i] = INF;
+        for (int i = 0; i < n; i++) dist[i] = INF; dist[s] = 0;
         priority_queue<ii, vector<ii>, greater<ii>> pq;
         pq.push({0,s});
         while(!pq.empty()){
