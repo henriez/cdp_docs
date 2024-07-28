@@ -212,21 +212,19 @@ int nFatoresDistintos (int n){
 }
 \end{verbatim}
 \subsubsection{Quantidade de Divisores}
+Algoritmo em O(n^1/2)
 \begin{verbatim}
-    int qtdDivisores(int n){
-        int ans = 1;
-        for (int i = 2; i <= n; i+=2){
-            int exp = 0;
-            while(n%i == 0){
-                n/=i;
-                exp++;
-            }
-            if (exp > 0)
-                ans *= (exp+1);
-            if (i == 2) i--;
-        }
-        return ans;
-    }
+    int countDivisors(int x){ 
+    int answer = 0; 
+    for (int i = 1; i <= sqrt(x); i++) { 
+        if (x % i == 0) { 
+            if (x / i == i) {answer++;}        
+            else { answer = answer + 2; }   
+        } 
+    } 
+    return answer; 
+} 
+
 \end{verbatim}
 \subsubsection{Soma dos Divisores}
 \begin{verbatim}
