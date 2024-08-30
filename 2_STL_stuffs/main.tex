@@ -182,4 +182,41 @@ bitset<n> nome(k);
 que armazena o número k.*/
     \end{verbatim}
 
-\pagebreak
+\subsection{Policy Based Data Structures}
+
+Permite estruturas como indexed set e MultiSet
+Template:
+
+\subsubsection{Indexed Set}
+Set que permite indexação.
+
+\begin{verbatim}
+template <typename T>
+using indexed_multiset = tree<
+    T,
+    null_type,
+    less_equal<T>,
+    rb_tree_tag,
+    tree_order_statistics_node_update>;
+\end{verbatim}
+
+Para encontrar elemento a partir de um índice $i$, use o método $find\_by\_order$, 
+para encontrar o índice de um valor, use o método $order\_of\_key$
+    
+
+\subsubsection{Indexed Multiset}
+
+Multiset que permite indexação.\\
+A única coisa que muda para o set é o comparador.\\
+OBS $lower\_bound$ e $upper\_bound$ são invertidos no multiset
+
+\begin{verbatim}
+template <typename T>
+using indexed_multiset = tree<
+    T,
+    null_type,
+    less_equal<T>,
+    rb_tree_tag,
+    tree_order_statistics_node_update>;
+\end{verbatim}
+

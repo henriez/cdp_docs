@@ -138,6 +138,92 @@ void KMP(string pat, string txt){
 \end{verbatim}
 
 
+\subsection{Aho-Corasick - Matching de dicionário}
+Conta a quantidade de matches por palavra dentro de um texto t. Complexidade: $\mathcal{O}(mk)$ 
+Onde $m$ é a quantidade de strings no dicionário e $k$ o tamanho do alfabeto.
+
+\begin{verbatim}
+    #define K 26
+    #define MAX 512345
+    
+    char to_i(char c){ return c-'a'; }
+    
+    struct node {
+      int term = 0, p, pc, link = -1, exi = -1, occ = 0;
+      vi nxt, go, idx;
+      node(int _p = 0, int _pc = 0) : p(_p), pc(_pc) {
+        nxt = go = vi(K, -1);
+      }
+    };
+    
+    vector<node> autom;
+    vi occ(MAX);
+    
+    void add_string(string s, int idx) {
+      int u = 0;
+      for (auto ch : s) {
+        int c = to_i(ch);
+        if (autom[u].nxt[c] == -1) {
+          autom[u].nxt[c] = autom.size();
+          autom.emplace_back(u, c);
+        }
+        u = autom[u].nxt[c];
+      }
+      autom[u].term = 1; autom[u].idx.push_back(idx);
+    }
+    
+    int go(int u, int c);
+    
+    int link(int u) {
+      if (autom[u].link != -1) return autom[u].link;
+      return autom[u].link = (u == 0 || autom[u].p == 0) ? 0 :
+        go(link(autom[u].p), autom[u].pc);
+    }
+    
+    int go(int u, int c) {
+      if (autom[u].go[c] != -1) return autom[u].go[c];
+      if (autom[u].nxt[c] != -1) return autom[u].go[c] = autom[u].nxt[c];
+      return autom[u].go[c] = u == 0 ? 0 : go(link(u), c);
+    }
+    
+    int exi(int u) { // assumes u != 0
+      int v = link(u);
+      if (autom[u].exi != -1) return autom[u].exi;
+      return autom[u].exi = (v == 0 || autom[v].term) ? v : exi(v);
+    }
+    
+    void process(string t) {
+      int i, u = 0;
+      for (i = 0; i < t.length(); i++) {
+        int c = to_i(t[i]);
+        u = go(u, c);
+        for (int v = u; v; v = exi(v))
+          autom[v].occ++;
+      }
+      for (u = 0; u < (int)autom.size(); u++)
+        for (auto &idx : autom[u].idx)
+          occ[idx] += autom[u].occ;
+    }
+    
+    void solve(){
+      int i;
+      string t;
+      int q;
+      autom.emplace_back();
+      cin >> t >> q;
+      for (i = 0; i < q; i++) {
+        string s;
+        cin >> s;
+        add_string(s, i);
+      }
+      process(t);
+      for (int i = 0; i < q; i++)
+        cout << occ[i] << endl;
+    
+    }
+            
+\end{verbatim}
+
 
 \includegraphics[width=130mm]{6_strings/ASCII.png}
 \pagebreak

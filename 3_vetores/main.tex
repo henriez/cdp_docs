@@ -140,58 +140,6 @@ Um teste com $n$ operações de consulta implementadas linearmente criariam um a
     }
 \end{verbatim}
 
-\subsubsection{SegTree Multiplicativa}
-\begin{verbatim}
-
-    int a[MAX], tree[4*MAX];
-
-    void build(int node, int start, int end){
-        // Leaf node
-        if(start == end) tree[node] = a[start];        
-        else{
-            int mid = (start + end) >> 1;
-            
-            build(2*node, start, mid);
-            build(2*node+1, mid+1, end);
-            
-            tree[node] = tree[2*node] * tree[2*node+1];
-        }
-    }
-    
-    void update(int node, int start, int end, int idx, int val){
-        // Leaf node
-        if(start == end){
-            A[idx] += val;
-            tree[node] += val;
-            return;
-        }
-    
-        int mid = (start + end) >> 1;
-        
-        if(start <= idx and idx <= mid) 
-            update(2*node, start, mid, idx, val); // left child
-        else 
-            update(2*node+1, mid+1, end, idx, val); // right child
-        
-        tree[node] = tree[2*node] * tree[2*node+1];
-        
-    }
-
-    int query(int node, int start, int end, int l, int r){
-        // range completely outside
-        if(r < start or end < l) return 1; // multiplication neutral
-
-        // range completely inside
-        if(l <= start and end <= r) return tree[node];
-        
-        // range partially inside and partially outside
-        int mid = (start + end) >> 1;
-        int p1 = query(2*node, start, mid, l, r);
-        int p2 = query(2*node+1, mid+1, end, l, r);
-        return (p1 * p2);
-    }
-\end{verbatim}
-
 
 \subsubsection{SegTree Aditiva com Lazy Propagation}
 \par Lazy propagation serve para atualizações em intervalos.
@@ -262,6 +210,194 @@ Um teste com $n$ operações de consulta implementadas linearmente criariam um a
         return (p1+p2);
     }
 \end{verbatim}
+
+\subsubsection{Segtree - Novo template}
+
+O uso desse template evita erros na hora de codar a seg, tente manter a struct como no template. 
+A ideia do template é apenas usar o método init 1 vez e então usar apenas set e query (em suas versões com menos parâmetros)\\
+Altere o NEUTRAL\_ELEMENT, o método merge, o método single e os dados guardados no node\\
+O exemplo abaixo resolve o problema do segmento de soma máxima
+
+\begin{verbatim}
+    
+struct node {
+    int seg, pre, suf, sum;
+};
+
+vi a;
+
+struct segtree {
+    int size;
+    vector<node> nodes;
+
+    node NEUTRAL_ELEMENT = {0,0,0,0};
+
+    node merge(node a, node b){
+        node ans;
+        ans.seg = max(a.suf+b.pre, max(a.seg, b.seg));
+        ans.pre = max(a.pre, a.sum+b.pre);
+        ans.suf = max(b.suf, a.suf+b.sum);
+        ans.sum = a.sum + b.sum;
+        return ans;
+    }
+
+    node single(int v){
+        node ans;
+        ans.seg = v;
+        ans.pre = v;
+        ans.suf = v;
+        ans.sum = v;
+        return ans;
+    }
+
+    void init(int n) {
+        size = 1;
+        while(size < n) size *= 2;
+        nodes.assign(2*size-1, NEUTRAL_ELEMENT);
+        build(0, 0, size, n);
+    }
+
+    void build(int x, int lx, int rx, int n) {
+        if (rx-lx == 1) {
+            if (lx < n) nodes[x] = single(a[lx]);
+            return;
+        }
+        int mx = (lx+rx) / 2;
+        build(2*x+1, lx, mx);
+        build(2*x+2, mx, rx);
+        nodes[x] = merge(nodes[2*x+1], nodes[2*x+2]);
+    }
+
+    void set(int i, int v, int x, int lx, int rx){
+        if (rx-lx == 1){
+            nodes[x] = single(v);
+            return;
+        }
+        int mx = (lx+rx)/2;
+        if (i < mx) set(i, v, 2*x+1, lx, mx);
+        else set(i, v, 2*x+2, mx, rx);
+        nodes[x] = merge(nodes[2*x+1], nodes[2*x+2]);
+    }
+
+    void set(int i, int v) {
+        set(i, v, 0, 0, size);
+    }
+
+    node query(int l, int r, int x, int lx, int rx){
+        if (r <= lx || l >= rx) return NEUTRAL_ELEMENT;
+        if (l <= lx && rx <= r) return nodes[x];
+        int mx = (lx+rx) / 2;
+        node left = query(l, r, 2*x+1, lx, mx);
+        node right = query(l, r, 2*x+2, mx, rx);
+        return merge(left, right);
+    }
+
+    node query(int l, int r) {
+        return query(l, r, 0, 0, size);
+    }
+};
+\end{verbatim}
+
+A aplicação da estrutura é assim:
+\begin{verbatim}
+void solve() {
+    int n, m;
+    cin >> n >> m;
+    a = vi(n);
+    for (int i = 0; i < n; i++) cin >> a[i];
+    st.init(n);
+    cout << max(st.query(0, n).seg, 0ll) << endl;
+    while(m--) {
+        int i, v; cin >> i >> v;
+        st.set(i,v);
+        cout << max(st.query(0,n).seg,0ll) << endl;
+    }
+}
+\end{verbatim}
+
+\subsubsection{Segtree - novo template + lazy propagation}
+
+Segtree aditiva com atualizações intevalares
+
+\begin{verbatim}
+    
+struct node {
+    int sum;
+};
+
+struct segtree {
+    int size;
+    vector<node> nodes;
+    vi lazy;
+
+    node NEUTRAL = {0};
+
+    node merge(node a, node b){
+        return {a.sum + b.sum};
+    }
+
+    void init(int n){
+        size = 2;
+        while (size < n) size *= 2;
+        nodes.assign(2*size-1, NEUTRAL);
+        lazy.assign(2*size-1, 0);
+    }
+
+    void rangeUpdate(int l, int r, int v){
+        rangeUpdate(l, r, v, 0, 0, size);
+    }
+
+    void rangeUpdate(int l, int r, int v, int x, int lx, int rx){
+        unlazy(x, lx, rx);
+        if (rx-lx<1 || rx <= l || r <= lx) return;
+
+        if (l <= lx && rx <= r){
+            return propagate(x, lx, rx, v);
+        }
+
+        int mx = (lx+rx)/2;
+        rangeUpdate(l, r, v, 2*x+1, lx, mx);
+        rangeUpdate(l, r, v, 2*x+2, mx, rx);
+        nodes[x] = merge(nodes[2*x+1], nodes[2*x+2]);
+    }
+
+    node query(int l, int r){
+        return query(l, r, 0, 0, size);
+    }
+
+    node query(int l, int r, int x, int lx, int rx){
+        unlazy(x, lx, rx);
+        if (rx-lx<1 || rx <= l || r <= lx) return NEUTRAL;
+
+        if (l <= lx && rx <= r) return nodes[x];
+
+        int mx = (lx+rx)/2;
+        node left = query(l, r, 2*x+1, lx, mx);
+        node right = query(l, r, 2*x+2, mx, rx);
+        return merge(left, right);
+    }
+
+    void propagate(int x, int lx, int rx, int v){
+        nodes[x].sum += (rx-lx)*v;
+        if (rx-lx > 1){
+            lazy[2*x+1] += v;
+            lazy[2*x+2] += v;
+        } 
+    }
+
+    void unlazy(int x, int lx, int rx){
+        if (lazy[x]){
+            nodes[x].sum += (rx-lx) * lazy[x];
+            if (rx-lx > 1){
+                lazy[2*x+1] += lazy[x];
+                lazy[2*x+2] += lazy[x];
+            }
+            lazy[x] = 0;
+        }
+    }
+};
+\end{verbatim}
+
 \subsection{Fenwick Tree (BIT)}
 
 \par Uma estrutura que, de modo semelhante à SegTree, realiza operações de consulta e de atualização ambas em $O(\log n)$. OBS: a árvore bit é indexada a partir de 1.

@@ -229,20 +229,18 @@ Algoritmo em O(n^1/2)
 \subsubsection{Soma dos Divisores}
 \begin{verbatim}
     int somaDivisores(int n){
-        int ans = 1;
-        for (int i = 2; i <= n; i+=2){
-            int exp = 0;
-            while(n%i == 0){
-                n/=i;
-                exp++;
+        int ans = 0;
+        for (int i = 1; i*i <= n; i++){
+            if (i*i == n && i != 1) ans += i;
+            else if (n%i == 0){
+                if (i != n)
+                    ans += i;
+                if (n/i != n)
+                    ans += n/i;
             }
-            if (exp > 0){
-                int aux = expbin(i, exp+1);
-                ans *= ((aux-1)/(i-1));
-            }
-            if (i == 2) i--;
         }
-    }
+        return ans;
+}
 \end{verbatim}
 
 \subsection{Função totiente}
