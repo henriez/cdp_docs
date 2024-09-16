@@ -243,5 +243,58 @@ void floyd_warshall(int graph[][N], int N) {
                     dist[i][j] = dist[i][k] + dist[k][j];
 }
     \end{verbatim}
+
+\subsubsection{k-th ancestral} Possui o objetivo de encontrar o k-ésimo ancestral de um nó V em complexidade O(log k)
+    \begin{verbatim}
+class BinaryLifiting{
+    public: 
+        int num_nodes;
+        vector<vector<int>> ancestor;
+        vector<bool> visited;
+        vector<vector<pair<int, int>>> g;
+
+        BinaryLifiting(int V): 
+            num_nodes(V), 
+            ancestor(V + 1, vector<int>(LOG, -1)),
+            g(MAX), 
+            visited(MAX, false){}
+
+        void dfs(int node, int parent){
+            ancestor[node][0] = parent;
+            visited[node] = true;
+            for (pair<int, int> neighbor : g[node]) {
+                if (!visited[neighbor.second]) {
+                    dfs(neighbor.second, node);
+                }
+            }
+        }
+
+        void preprocess(){
+            dfs(1, -1);
+            for (int j = 1; j < LOG; j++) {
+                for (int i = 1; i <= num_nodes; i++) {
+                    if (ancestor[i][j-1] != -1)
+                        ancestor[i][j] = ancestor[ancestor[i][j-1]][j-1];
+                }
+            }
+        }
+
+        int findKthAncestor(int node, int K){
+            for (int i = LOG - 1; i >= 0; i--) {
+                if (K & (1 << i)) {
+                    if (ancestor[node][i] == -1)
+                        return -1;
+                    node = ancestor[node][i];
+                }
+            }
+            return node;
+        }
+
+        void addEdge(int u, int v, int w) {
+            g[u].push_back({w, v});
+            g[v].push_back({w, u});
+        }
+}
+    \end{verbatim}
 \pagebreak
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
